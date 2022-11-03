@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+get_env = os.environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r#a0+ux#++fxa&2ni6=rn@9wk_@gj9%7hy98w9cg$z5tvuphh4'
+SECRET_KEY = get_env.get('SECRET_KEY','secret')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['http://dj-reactauth.herokuapp.com','https://dj-reactauth.herokuapp.com','localhost']
 
 
 # Application definition
@@ -147,11 +150,6 @@ SIMPLE_JWT = {
 
 DJOSER = {
     'LOGIN_FIELD' : 'email',
-    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
-    # 'ACTIVATION_URL': '/activate/{uid}/{token}',
-    # 'SEND_ACTIVATION_EMAIL': True,
-    # 'SEND_CONFIRMATION_EMAIL':True,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
     'SERIALIZERS': {
         'user_create':'users.serializers.UserCreateSerializer',
         'user':'users.serializers.UserCreateSerializer',
