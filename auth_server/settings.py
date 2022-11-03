@@ -28,7 +28,7 @@ SECRET_KEY = get_env.get('SECRET_KEY','secret')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['http://dj-reactauth.herokuapp.com','https://dj-reactauth.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
