@@ -2,7 +2,13 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.core.exceptions import ValidationError
 
+def clean_email(value):
+    user = User.objects.filter(email=value)
+    if user.exists():
+        raise ValidationError('Email Already Registerd')
+    return value
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, first_name,last_name, password=None):
@@ -73,3 +79,6 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+    def clean(self):
+        super().clean()
+        self.email = self.__class__.objects.normalize_email(self.email)
