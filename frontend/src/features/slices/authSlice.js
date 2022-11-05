@@ -20,7 +20,7 @@ export const register = createAsyncThunk('auth/register',async(userdata,thunkApi
         }
         return response.data
     } catch (error) {
-        const message = error.message.toString()
+        const message = (error.response.data.email[0] || error.response.data.first_name[0] || error.response.data.last_name[0] || error.response.data.password[0])
         return thunkApi.rejectWithValue(message)
     }
 })
@@ -33,7 +33,7 @@ export const login = createAsyncThunk('auth/login',async(userdata,thunkApi)=>{
         }
         return response.data
     } catch (error) {
-         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+         const message = error.response.data.detail
         return thunkApi.rejectWithValue(message)
     }
 })
